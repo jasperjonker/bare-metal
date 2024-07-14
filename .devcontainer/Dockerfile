@@ -11,13 +11,13 @@ ARG ARM_COMPILER_PATH=/opt/arm
 RUN apt-get clean && apt-get update -y && \
     apt-get install -y \
         make \
-        curl \
+        wget \
         xz-utils && \
     rm -rf /var/lib/apt/lists/*
 
 # Download & install arm compiler
-RUN curl -o /tmp/arm-gnu-none-eabi-${ARM_COMPILER_VERSION}.tar.xz \
-    https://developer.arm.com/-/media/Files/downloads/gnu/${ARM_COMPILER_VERSION}/binrel/arm-gnu-toolchain-${ARM_COMPILER_VERSION}-x86_64-arm-none-eabi.tar.xz
+RUN wget -O /tmp/arm-gnu-none-eabi-${ARM_COMPILER_VERSION}.tar.xz \
+    "https://developer.arm.com/-/media/Files/downloads/gnu/${ARM_COMPILER_VERSION}/binrel/arm-gnu-toolchain-${ARM_COMPILER_VERSION}-x86_64-arm-none-eabi.tar.xz"
 
 # Create a directory for the compiler and extract the tar.xz file
 RUN mkdir -p ${ARM_COMPILER_PATH} && \
