@@ -1,15 +1,18 @@
 FROM ubuntu:24.04
 
 # Set the locale.
-ENV LANG C.UTF-8
+ENV LANG=C.UTF-8
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 ARG ARM_COMPILER_VERSION=13.3.rel1
 ARG ARM_COMPILER_PATH=/opt/arm
 
-RUN apt update && \
-    apt install -y make curl xz-utils && \
+RUN apt-get clean && apt-get update -y && \
+    apt-get install -y \
+        make \
+        curl \
+        xz-utils && \
     rm -rf /var/lib/apt/lists/*
 
 # Download & install arm compiler
