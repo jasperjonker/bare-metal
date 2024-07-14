@@ -1,0 +1,38 @@
+{
+    "configurations": [
+        {
+            "name": "(gdb) ST-Link",
+            "cwd": "${workspaceRoot}",
+            "executable": "${workspaceFolder}/build/firmware.elf",
+            "preLaunchTask": "Build & Flash",
+            "request": "launch",
+            "type": "cortex-debug",
+            "runToEntryPoint": "main",
+            "showDevDebugOutput": "none",
+            "servertype": "stlink",
+            "armToolchainPath": "/opt/arm/bin/",
+            "svdFile": "${workspaceFolder}/resources/STM32G431.svd",
+            "device": "STM32G431KB",
+            "liveWatch": {
+                "enabled": true,
+                "samplesPerSecond": 1
+            },
+            "interface": "swd"
+        },
+        {
+            "name": "(gdb) J-Link",
+            "cwd": "${workspaceFolder}",
+            "executable": "${workspaceFolder}/build/firmware.elf",
+            "preLaunchTask": "Build & Flash",
+            "request": "launch",
+            "type": "cortex-debug",
+            "runToEntryPoint": "main",
+            "showDevDebugOutput": "none",
+            "servertype": "jlink",
+            "armToolchainPath": "/opt/arm/bin/",
+            "svdFile": "${workspaceFolder}/resources/STM32G431.svd",
+            "device": "STM32G431KB",
+            "interface": "swd"
+        }
+    ]
+}

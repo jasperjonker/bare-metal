@@ -1,0 +1,14 @@
+{
+    "recommendations": [
+        "ms-vscode.cpptools-extension-pack",
+        "ms-vscode.hexeditor",
+        "ms-vscode.vscode-serial-monitor",
+        "aaron-bond.better-comments",
+        "marus25.cortex-debug",
+        "mcu-debug.debug-tracker-vscode",
+        "mcu-debug.memory-view",
+        "mcu-debug.rtos-views",
+        "mcu-debug.peripheral-viewer",
+        "cschlosser.doxdocgen"
+    ]
+}
