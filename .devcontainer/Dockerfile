@@ -2,8 +2,8 @@ FROM ubuntu:24.04
 
 # Set the locale.
 ENV LANG=C.UTF-8
-
 ENV DEBIAN_FRONTEND=noninteractive
+ENV PATH=/opt/arm/bin:$PATH
 
 ARG ARM_COMPILER_VERSION=13.3.rel1
 ARG ARM_COMPILER_PATH=/opt/arm
