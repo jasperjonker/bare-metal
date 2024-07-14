@@ -1,0 +1,25 @@
+{
+    "configurations": [
+        {
+            "name": "GCC-arm",
+            "includePath": ["${workspaceFolder}/**"],
+            // "forcedInclude": [
+            //     "${workspaceFolder}/"
+            // ],
+            "defines": [
+                // "BUILD_VERSION=v1.0.0",
+            ],
+            "compilerPath": "/opt/arm/bin/arm-none-eabi-gcc",
+            "compileCommands": "${workspaceFolder}/build/compile_commands.json",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "linux-gcc-arm",
+            "browse": {
+                "path": ["${workspaceFolder}"],
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": ""
+            }
+        }
+    ],
+    "version": 4
+}
