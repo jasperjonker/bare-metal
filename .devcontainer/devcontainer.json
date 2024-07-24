@@ -9,8 +9,7 @@
             "--network=host"
         ]
     },
-    // "remoteUser": "user",
-    // "containerUser": "user",
+    "remoteUser": "ubuntu",
     "updateRemoteUserUID": true,
     // "features": {
     //     "ghcr.io/mikaello/devcontainer-features/modern-shell-utils:latest": {},
