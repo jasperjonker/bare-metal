@@ -1,6 +1,6 @@
 # Variables
 BUILD_DIR := build
-SOURCES := main.c gpio.c
+SOURCES := src/main.c src/gpio.c
 OBJECTS := $(SOURCES:%.c=$(BUILD_DIR)/%.o)
 
 # Compiler
