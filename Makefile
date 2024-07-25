@@ -73,7 +73,7 @@ CFLAGS					+= -I$(INC_DIR) -I$(LIB_CMSIS) -I$(LIB_CMSIS_CORE)
 
 LDFLAGS					+= $(TOOLCHAIN_SETTINGS) $(DEFS)
 LDFLAGS                 += -Tlink.ld
-LDFLAGS                 += -nostartfiles
+# LDFLAGS                 += -nostartfiles
 # LDFLAGS                 += -nostdlib
 LDFLAGS                 += --specs=nano.specs
 LDFLAGS                 += -lc -lgcc
