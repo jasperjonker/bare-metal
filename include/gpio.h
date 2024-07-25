@@ -4,6 +4,10 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /* The GPIO(bank) upper byte indicates GPIO bank, and lower byte indicates pin number*/
 #define GPIO(bank) ((struct gpio *) (0x48000000 + 0x400 * (bank)))
 #define PIN(bank, num) ((((bank) - 'A') << 8) | (num))
@@ -20,5 +24,9 @@ enum gpio_mode {
 
 extern void gpio_set_mode(uint16_t pin, uint8_t mode);
 extern void gpio_write(uint16_t pin, bool val);
+
+#ifdef __cplusplus
+}  // extern "C"
+#endif
 
 #endif // GPIO_H

@@ -1,15 +1,34 @@
 #include "gpio.h"
+#include "sleep.c"
+
+void _init(void) {
+    // Optional: Put your system initialization code here if needed.
+}
+
+void _fini(void) {
+    // Optional: Put your system finalization/cleanup code here if needed.
+}
 
 int main(void) {
+
+  // Initialize sleep
+  DWT_Delay_Init();
+
   // Turn GPIOPB8 LD2 (green LED) on
   gpio_set_mode(PIN('B', 8), OUTPUT);
-  gpio_write(PIN('B', 8), 1);
 
-  while (1) ; // Infinite loop
+
+  while (1) {
+    gpio_write(PIN('B', 8), 1);
+    DWT_Delay_ms(1000);
+    gpio_write(PIN('B', 8), 0);
+    DWT_Delay_ms(1000);
+  }
 
   return 0; // Do nothing so far
 }
 
+/*
 // Startup code
 __attribute__((naked, noreturn)) void _reset(void) {
   // memset .bss to zero, and copy .data section to RAM region
@@ -27,4 +46,5 @@ extern void _estack(void);  // Defined in link.ld
 __attribute__((section(".vectors"))) void (*const tab[16 + 102])(void) = {
   _estack, _reset
 };
+*/
 
