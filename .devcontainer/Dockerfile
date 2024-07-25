@@ -17,6 +17,7 @@ RUN apt-get clean && apt-get update -y && \
         ca-certificates \
         xz-utils \
         stlink-tools \
+        libnewlib-arm-none-eabi \
         git \
         zsh \
         ssh \
