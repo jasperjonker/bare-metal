@@ -33,7 +33,7 @@ uint32_t DWT_Delay_Init(void)
 
 
 // This Function Provides Delay In Milliseconds Using DWT
-__STATIC_INLINE void DWT_Delay_ms(volatile uint32_t au32_milliseconds)
+void DWT_Delay_ms(volatile uint32_t au32_milliseconds)
 {
   uint32_t au32_initial_ticks = DWT->CYCCNT;
   uint32_t au32_ticks = (HAL_RCC_GetHCLKFreq() / 1000);

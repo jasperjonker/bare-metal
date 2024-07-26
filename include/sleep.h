@@ -12,7 +12,7 @@ extern "C" {
 #include "core_cm4.h"
 
 uint32_t DWT_Delay_Init(void);
-__STATIC_INLINE void DWT_Delay_ms(volatile uint32_t au32_milliseconds);
+void DWT_Delay_ms(volatile uint32_t au32_milliseconds);
 
 
 #ifdef __cplusplus

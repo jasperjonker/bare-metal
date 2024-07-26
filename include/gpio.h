@@ -22,6 +22,7 @@ enum gpio_mode {
     ANALOG = 0b11
 };
 
+extern void gpio_enable_bank(uint8_t bank, bool en);
 extern void gpio_set_mode(uint16_t pin, uint8_t mode);
 extern void gpio_write(uint16_t pin, bool val);
 

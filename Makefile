@@ -31,6 +31,7 @@ PROJECT_SOURCES 		+= $(SRC_DIR)/startup_stm32g431xx.s
 PROJECT_SOURCES 		+= $(SRC_DIR)/system_stm32g4xx.c
 PROJECT_SOURCES 		+= $(SRC_DIR)/main.c
 PROJECT_SOURCES 		+= $(SRC_DIR)/gpio.c
+PROJECT_SOURCES 		+= $(SRC_DIR)/sleep.c
 
 # Source files from the HAL library
 # HAL_SOURCES 			+= $(wildcard $(LIB_DIR)/stm32g4xx_hal_driver/Src/*.c)
