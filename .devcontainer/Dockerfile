@@ -1,14 +1,20 @@
-FROM ubuntu:24.04
+FROM ubuntu:22.04
+
+ARG USERNAME=ubuntu
+ARG USER_UID=1000
+ARG USER_GID=$USER_UID
+
+ARG ARM_COMPILER_VERSION=13.3.rel1
+ARG ARM_COMPILER_PATH=/opt/arm/${ARM_COMPILER_VERSION}
 
 # Set the locale.
 ENV LANG=C.UTF-8
 
 # Avoid warnings by switching to noninteractive
 ENV DEBIAN_FRONTEND=noninteractive
-ENV PATH=/opt/arm/bin:$PATH
 
-ARG ARM_COMPILER_VERSION=13.3.rel1
-ARG ARM_COMPILER_PATH=/opt/arm
+# Add ARM compiler to path
+ENV PATH=${ARM_COMPILER_PATH}/bin:$PATH
 
 RUN apt-get clean && apt-get update -y && \
     apt-get install -y --no-install-recommends \
@@ -22,6 +28,8 @@ RUN apt-get clean && apt-get update -y && \
         zsh \
         ssh \
         gdb \
+        libncursesw5 \
+        sudo \
         gnupg2 && \
     rm -rf /var/lib/apt/lists/*
 
@@ -36,5 +44,9 @@ RUN mkdir -p ${ARM_COMPILER_PATH} && \
 
 # NOTE: All user configuration (e.g. zshrc, nvim) should be done using dotfiles and added to vscode settings.json
 
+# Create a user. This can be removed in ubuntu 24.04, as ubuntu is default user
+RUN groupadd --gid $USER_GID $USERNAME \
+    && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME
+
 # Set default username
-USER ubuntu
+USER $USERNAME

@@ -8,16 +8,18 @@
             "request": "launch",
             "type": "cortex-debug",
             "runToEntryPoint": "main",
-            "showDevDebugOutput": "none",
+            "showDevDebugOutput": "raw",
             "servertype": "stlink",
-            "armToolchainPath": "/opt/arm/bin/",
+            "interface": "swd",
+            "armToolchainPath": "/opt/arm/13.3.rel1/bin/",
+            // "gdbPath": "/opt/arm/13.3.rel1/bin/arm-none-eabi-gdb",
+            // "gdbTarget": "localhost:3333",
             "svdFile": "${workspaceFolder}/resources/STM32G431.svd",
             "device": "STM32G431KB",
             "liveWatch": {
                 "enabled": true,
                 "samplesPerSecond": 1
-            },
-            "interface": "swd"
+            }
         },
         {
             "name": "(gdb) J-Link",
