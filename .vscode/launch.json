@@ -11,7 +11,7 @@
             "showDevDebugOutput": "raw",
             "servertype": "stlink",
             "interface": "swd",
-            "armToolchainPath": "/opt/arm/13.3.rel1/bin/",
+            "armToolchainPath": "${env:ARM_COMPILER_PATH}/bin/",
             // "gdbPath": "/opt/arm/13.3.rel1/bin/arm-none-eabi-gdb",
             // "gdbTarget": "localhost:3333",
             "svdFile": "${workspaceFolder}/resources/STM32G431.svd",

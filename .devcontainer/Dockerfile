@@ -5,7 +5,6 @@ ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
 ARG ARM_COMPILER_VERSION=13.3.rel1
-ARG ARM_COMPILER_PATH=/opt/arm/${ARM_COMPILER_VERSION}
 
 # Set the locale.
 ENV LANG=C.UTF-8
@@ -14,6 +13,7 @@ ENV LANG=C.UTF-8
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Add ARM compiler to path
+ENV ARM_COMPILER_PATH=/opt/arm/${ARM_COMPILER_VERSION}
 ENV PATH=${ARM_COMPILER_PATH}/bin:$PATH
 
 RUN apt-get clean && apt-get update -y && \
