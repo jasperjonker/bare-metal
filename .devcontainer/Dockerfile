@@ -31,7 +31,10 @@ RUN apt-get clean && apt-get update -y && \
         libncursesw5 \
         sudo \
         gnupg2 && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* && \
+    # Add sudo support
+    echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME && \
+    chmod 0440 /etc/sudoers.d/$USERNAME
 
 # Download & install arm compiler
 RUN wget -O /tmp/arm-gnu-none-eabi-${ARM_COMPILER_VERSION}.tar.xz \
