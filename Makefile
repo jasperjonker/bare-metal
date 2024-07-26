@@ -14,13 +14,15 @@ BUILD_DIR   			:= build
 SRC_DIR     			:= src
 INC_DIR     			:= include
 LIB_DIR     			:= lib
-DEBUG 					?= 1 				# 0 = release, 1 = debug
+DEBUG					?= 1 				# 0 = release, 1 = debug
 
 
 ###############################################################################
 # Defined symbols
 ###############################################################################
 DEFS 	    			+= -DSTM32G431xx
+DEFS 	    			+= -DDEBUG
+# DEFS 	    			+= -DUSE_HAL_DRIVER
 
 
 ###############################################################################
@@ -29,9 +31,10 @@ DEFS 	    			+= -DSTM32G431xx
 # Source files from the main project
 PROJECT_SOURCES 		+= $(SRC_DIR)/startup_stm32g431xx.s
 PROJECT_SOURCES 		+= $(SRC_DIR)/system_stm32g4xx.c
+PROJECT_SOURCES 		+= $(SRC_DIR)/stm32g4xx_hal_msp.c
+PROJECT_SOURCES 		+= $(SRC_DIR)/stm32g4xx_it.c
 PROJECT_SOURCES 		+= $(SRC_DIR)/main.c
 PROJECT_SOURCES 		+= $(SRC_DIR)/gpio.c
-PROJECT_SOURCES 		+= $(SRC_DIR)/sleep.c
 
 # Source files from the HAL library
 # HAL_SOURCES 			+= $(wildcard $(LIB_DIR)/stm32g4xx_hal_driver/Src/*.c)
@@ -42,6 +45,14 @@ HAL_SOURCES 			+= $(LIB_DIR)/stm32g4xx_hal_driver/Src/stm32g4xx_hal_rcc_ex.c
 HAL_SOURCES 			+= $(LIB_DIR)/stm32g4xx_hal_driver/Src/stm32g4xx_hal_pwr.c
 HAL_SOURCES 			+= $(LIB_DIR)/stm32g4xx_hal_driver/Src/stm32g4xx_hal_pwr_ex.c
 HAL_SOURCES 			+= $(LIB_DIR)/stm32g4xx_hal_driver/Src/stm32g4xx_hal_gpio.c
+# HAL_SOURCES 			+= $(LIB_DIR)/stm32g4xx_hal_driver/Src/stm32g4xx_hal_dma.c
+# HAL_SOURCES 			+= $(LIB_DIR)/stm32g4xx_hal_driver/Src/stm32g4xx_hal_dma_ex.c
+# HAL_SOURCES 			+= $(LIB_DIR)/stm32g4xx_hal_driver/Src/stm32g4xx_hal_exti.c
+# HAL_SOURCES 			+= $(LIB_DIR)/stm32g4xx_hal_driver/Src/stm32g4xx_hal_flash.c
+# HAL_SOURCES 			+= $(LIB_DIR)/stm32g4xx_hal_driver/Src/stm32g4xx_hal_flash_ex.c
+# HAL_SOURCES 			+= $(LIB_DIR)/stm32g4xx_hal_driver/Src/stm32g4xx_hal_flash_ramfunc.c
+# HAL_SOURCES 			+= $(LIB_DIR)/stm32g4xx_hal_driver/Src/stm32g4xx_hal_tim.c
+# HAL_SOURCES 			+= $(LIB_DIR)/stm32g4xx_hal_driver/Src/stm32g4xx_hal_tim_ex.c
 
 # Combine all sources
 SOURCES 				+= $(PROJECT_SOURCES) $(HAL_SOURCES)
@@ -51,6 +62,7 @@ SOURCES 				+= $(PROJECT_SOURCES) $(HAL_SOURCES)
 ###############################################################################
 LIB_CMSIS_CORE			:= $(LIB_DIR)/CMSIS/CORE/Include
 LIB_STM32_HAL			:= $(LIB_DIR)/stm32g4xx_hal_driver/Inc
+LIB_STM32_HAL_LEGACY	:= $(LIB_DIR)/stm32g4xx_hal_driver/Inc/Legacy
 
 
 ###############################################################################
@@ -71,7 +83,7 @@ TOOLCHAIN_SETTINGS      := -fmessage-length=0
 CPU   					+= -mcpu=cortex-m4
 CPU   					+= -mthumb
 CPU   					+= -mfloat-abi=hard
-CPU   					+= -mfpu=vfpv4
+CPU   					+= -mfpu=fpv4-sp-d16
 
 # Compiler & Linker Flags
 CFLAGS					+= $(TOOLCHAIN_SETTINGS) $(DEFS) $(CPU)
@@ -83,7 +95,7 @@ CFLAGS					+= -Wformat-truncation -pedantic
 CFLAGS					+= -fno-common
 CFLAGS					+= -ffunction-sections -fdata-sections
 CFLAGS					+= -std=gnu2x
-CFLAGS					+= -I$(INC_DIR) -I$(LIB_CMSIS_CORE) -I$(LIB_STM32_HAL)
+CFLAGS					+= -I$(INC_DIR) -I$(LIB_CMSIS_CORE) -I$(LIB_STM32_HAL) -I$(LIB_STM32_HAL_LEGACY)
 
 LDFLAGS					+= $(TOOLCHAIN_SETTINGS) $(DEFS)
 LDFLAGS                 += -Tlink.ld
@@ -108,13 +120,12 @@ DEFS_RELEASE       		:=
 CFLAGS_RELEASE   		:= -O3
 LDFLAGS_RELEASE			:=
 
+DEBUG := $(strip $(DEBUG))
 ifeq ($(DEBUG), 1)
-# @echo "Building for debug..."
 	DEFS    += $(DEFS_DEBUG)
 	CFLAGS  += $(CFLAGS_DEBUG)
 	LDFLAGS += $(LDFLAGS_DEBUG)
 else
-# @echo "Building for release..."
 	DEFS    += $(DEFS_RELEASE)
 	CFLAGS  += $(CFLAGS_RELEASE)
 	LDFLAGS += $(LDFLAGS_RELEASE)

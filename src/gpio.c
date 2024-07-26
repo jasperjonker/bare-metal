@@ -24,5 +24,11 @@ extern void gpio_set_mode(uint16_t pin, uint8_t mode) {
 
 extern void gpio_write(uint16_t pin, bool val) {
   struct gpio *gpio = GPIO(PINBANK(pin));
-  gpio->BSRR = (1U << PINNO(pin)) << (val ? 0 : 16);
+  if (val == 1) {
+    gpio->ODR |= (1U << PINNO(pin));
+  } else if (val == 0) {
+    gpio->ODR &= ~(1U << PINNO(pin)); // Reset the Pin
+  }
+
+  // gpio->BSRR = ((gpio->ODR & PINNO(pin)) << 16U) | (~gpio->ODR & PINNO(pin));
 }

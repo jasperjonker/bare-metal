@@ -57,48 +57,53 @@ void Error_Handler(void) {
 }
 
 
+static void MX_GPIO_Init(void)
+{
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
+/* USER CODE BEGIN MX_GPIO_Init_1 */
+/* USER CODE END MX_GPIO_Init_1 */
+
+  /* GPIO Ports Clock Enable */
+  __HAL_RCC_GPIOF_CLK_ENABLE();
+  __HAL_RCC_GPIOA_CLK_ENABLE();
+  __HAL_RCC_GPIOB_CLK_ENABLE();
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin : LD2_Pin */
+  GPIO_InitStruct.Pin = LD2_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(LD2_GPIO_Port, &GPIO_InitStruct);
+
+/* USER CODE BEGIN MX_GPIO_Init_2 */
+/* USER CODE END MX_GPIO_Init_2 */
+}
+
+
 int main(void) {
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
   /* Configure the system clock */
   SystemClock_Config();
 
-  // Initialize sleep
-  DWT_Delay_Init();
-
-  gpio_enable_bank('B', 1);
+  MX_GPIO_Init();
+  // gpio_enable_bank('B', 1);
 
   // Turn GPIOPB8 LD2 (green LED) on
-  gpio_set_mode(PIN('B', 8), OUTPUT);
+  // gpio_set_mode(PIN('B', 8), OUTPUT);
 
 
   while (1) {
-    gpio_write(PIN('B', 8), 1);
-    DWT_Delay_ms(1000);
-    gpio_write(PIN('B', 8), 0);
-    DWT_Delay_ms(1000);
+    // gpio_write(PIN('B', 8), 1);
+    HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+    HAL_Delay(1000);
+    // gpio_write(PIN('B', 8), 0);
+    // HAL_Delay(1000);
   }
 
   return 0; // Do nothing so far
 }
-
-/*
-// Startup code
-__attribute__((naked, noreturn)) void _reset(void) {
-  // memset .bss to zero, and copy .data section to RAM region
-  extern long _sbss, _ebss, _sdata, _edata, _sidata;
-  for (long *dst = &_sbss; dst < &_ebss; dst++) *dst = 0;
-  for (long *dst = &_sdata, *src = &_sidata; dst < &_edata;) *dst++ = *src++;
-
-  main();             // Call main()
-  for (;;) (void) 0;  // Infinite loop in the case if main() returns
-}
-
-extern void _estack(void);  // Defined in link.ld
-
-// 16 standard and 102 STM32-specific handlers
-__attribute__((section(".vectors"))) void (*const tab[16 + 102])(void) = {
-  _estack, _reset
-};
-*/
-
